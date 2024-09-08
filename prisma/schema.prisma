@@ -21,6 +21,8 @@ model Site {
   updatedAt DateTime @updatedAt
   category Category @relation(fields: [categoryId], references: [id])
   categoryId Int
+  contact Contact @relation(fields: [contactId], references: [id])
+  contactId Int @unique
 
   @@map("sites")
 
@@ -35,9 +37,9 @@ model Category {
 
 model Contact {
   id       Int   @id @default(autoincrement())
-  name     Varchar 
-  address  Varchar
-  phone    Int
-  locations Location[]
+  name     String @db.VarChar(100)
+  address  String @db.VarChar(200)
+  phone    String @db.VarChar(16)
+  site     Site?
   @@map("contacts")
 }
