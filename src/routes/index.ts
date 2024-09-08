@@ -4,14 +4,14 @@ import {
   getAllLocations,
   getLocationById,
   deleteLocationById,
-} from "../controllers/LocationController";
+} from "../services/LocationService";
 
 import {
   createCategory,
   deleteCategoryById,
   getAllCategories,
   getCategoryById,
-} from "../controllers/CategoryController";
+} from "../services/CategoryService";
 
 // Initialize router
 const router = new Hono();
