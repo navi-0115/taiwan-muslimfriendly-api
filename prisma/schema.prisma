@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Location {
+model Site {
   id       Int   @id @default(autoincrement())
   name     String
   description String?
@@ -22,11 +22,22 @@ model Location {
   category Category @relation(fields: [categoryId], references: [id])
   categoryId Int
 
+  @@map("sites")
 
 }
 
 model Category {
   id       Int   @id @default(autoincrement())
   name     String 
+  sites Site[]
+  @@map("categories")
+}
+
+model Contact {
+  id       Int   @id @default(autoincrement())
+  name     Varchar 
+  address  Varchar
+  phone    Int
   locations Location[]
+  @@map("contacts")
 }
