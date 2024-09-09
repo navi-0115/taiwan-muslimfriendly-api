@@ -1,7 +1,19 @@
 // categories/schema.ts
 import { z } from "zod";
 
-export const CategorySchema = z.object({
-  name: z.string().min(1),
-  description: z.string().min(6),
+//Creating a category
+export const createCategorySchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  description: z.string().min(1, "Description is required"),
+});
+
+//Updating a category (optional fields)
+export const updateCategorySchema = z.object({
+  name: z.string().optional(),
+  description: z.string().optional(),
+});
+
+// for id
+export const categoryIdSchema = z.object({
+  id: z.string().regex(/^\d+$/, "ID must be a number"),
 });

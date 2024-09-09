@@ -1,104 +1,138 @@
-// Import Context for handling HTTP response and requests
-import { Context } from "hono";
-import { zValidator } from "@hono/zod-validator";
-import { z } from "zod";
+// categories/service.ts
+import prisma from "../../prisma/client";
 
-import prisma from "../../prisma/client/index";
+// Fetch all categories from the database
+export async function getAllCategoriesService() {
+  return await prisma.category.findMany({ orderBy: { id: "desc" } });
+}
+// Fetch categories by id
+export async function getCategoryByIdService(id: number) {
+  return await prisma.category.findUnique({ where: { id } });
+}
 
-// Zod Schema
-// const categorySchema = z.object({
-//   name: z.string(),
-// });
+// Create a new category
+export async function createCategoryService(data: {
+  name: string;
+  description: string;
+}) {
+  return await prisma.category.create({
+    data,
+  });
+}
+// Update a category by ID
+export async function updateCategoryService(
+  id: number,
+  data: { name?: string; description?: string }
+) {
+  return await prisma.category.update({ where: { id }, data });
+}
 
-//  POST a new category
-export const createCategory = async (c: Context) => {
-  try {
-    const body = await c.req.parseBody();
+// Delete a category by ID
+export async function deleteCategoryByIdService(id: number) {
+  return await prisma.category.delete({ where: { id } });
+}
 
-    if (typeof body.name !== "string" || body.name.trim() === "") {
-      return c.json({ success: false, message: "Invalid category name" }, 400);
-    }
-    const addCategory = await prisma.category.create({
-      data: {
-        name: body.name,
-      },
-    });
+// // Import Context for handling HTTP response and requests
+// import { Context } from "hono";
+// import { zValidator } from "@hono/zod-validator";
+// import { z } from "zod";
 
-    return c.json(
-      {
-        success: true,
-        messages: "Created New Taiwan Tourism Category!",
-        data: addCategory,
-      },
-      201
-    );
-  } catch (error) {
-    console.error(`Error to create category: ${error}`);
-    return c.json(
-      { sucess: false, message: "error creating new category!" },
-      500
-    );
-  }
-};
+// import prisma from "../../prisma/client/index";
 
-// GET all category
-export const getAllCategories = async (c: Context) => {
-  try {
-    const category = await prisma.category.findMany({
-      orderBy: { id: "desc" },
-    });
+// // Zod Schema
+// // const categorySchema = z.object({
+// //   name: z.string(),
+// // });
 
-    return c.json(
-      {
-        success: true,
-        messages: "List Taiwan Tourism category!",
-        data: category,
-      },
-      200
-    );
-  } catch (error) {
-    console.error(`Error getting category: ${error}`);
-  }
-};
+// //  POST a new category
+// export const createCategory = async (c: Context) => {
+//   try {
+//     const body = await c.req.parseBody();
 
-// GET category by id
-export const getCategoryById = async (c: Context) => {
-  try {
-    const id = Number(c.req.param("id"));
-    if (!id) return c.json({ success: false, messages: `could not found ID` });
+//     if (typeof body.name !== "string" || body.name.trim() === "") {
+//       return c.json({ success: false, message: "Invalid category name" }, 400);
+//     }
+//     const addCategory = await prisma.category.create({
+//       data: {
+//         name: body.name,
+//       },
+//     });
 
-    const category = await prisma.category.findUnique({ where: { id } });
+//     return c.json(
+//       {
+//         success: true,
+//         messages: "Created New Taiwan Tourism Category!",
+//         data: addCategory,
+//       },
+//       201
+//     );
+//   } catch (error) {
+//     console.error(`Error to create category: ${error}`);
+//     return c.json(
+//       { sucess: false, message: "error creating new category!" },
+//       500
+//     );
+//   }
+// };
 
-    return c.json(
-      {
-        success: true,
-        messages: "Here is your tourism category you are looking for",
-        data: category,
-      },
-      200
-    );
-  } catch (error) {
-    console.error(`Error getting category: ${error}`);
-  }
-};
+// // GET all category
+// export const getAllCategories = async (c: Context) => {
+//   try {
+//     const category = await prisma.category.findMany({
+//       orderBy: { id: "desc" },
+//     });
 
-// DELETE category by id
-export const deleteCategoryById = async (c: Context) => {
-  try {
-    const id = Number(c.req.param("id"));
-    if (!id) return c.json({ success: false, messages: "could not found ID" });
+//     return c.json(
+//       {
+//         success: true,
+//         messages: "List Taiwan Tourism category!",
+//         data: category,
+//       },
+//       200
+//     );
+//   } catch (error) {
+//     console.error(`Error getting category: ${error}`);
+//   }
+// };
 
-    const deletedLocation = await prisma.site.delete({ where: { id } });
+// // GET category by id
+// export const getCategoryById = async (c: Context) => {
+//   try {
+//     const id = Number(c.req.param("id"));
+//     if (!id) return c.json({ success: false, messages: `could not found ID` });
 
-    return c.json(
-      {
-        success: true,
-        messages: `Location with ID ${id} has been deleted`,
-        data: deletedLocation,
-      },
-      200
-    );
-  } catch (error) {
-    console.error(`Error getting places: ${error}`);
-  }
-};
+//     const category = await prisma.category.findUnique({ where: { id } });
+
+//     return c.json(
+//       {
+//         success: true,
+//         messages: "Here is your tourism category you are looking for",
+//         data: category,
+//       },
+//       200
+//     );
+//   } catch (error) {
+//     console.error(`Error getting category: ${error}`);
+//   }
+// };
+
+// // DELETE category by id
+// export const deleteCategoryById = async (c: Context) => {
+//   try {
+//     const id = Number(c.req.param("id"));
+//     if (!id) return c.json({ success: false, messages: "could not found ID" });
+
+//     const deletedLocation = await prisma.site.delete({ where: { id } });
+
+//     return c.json(
+//       {
+//         success: true,
+//         messages: `Location with ID ${id} has been deleted`,
+//         data: deletedLocation,
+//       },
+//       200
+//     );
+//   } catch (error) {
+//     console.error(`Error getting places: ${error}`);
+//   }
+// };
