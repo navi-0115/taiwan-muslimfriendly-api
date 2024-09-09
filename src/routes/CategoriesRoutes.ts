@@ -59,11 +59,18 @@ categoriesRoute.openapi(
     tags: API_TAG,
   },
   async (c) => {
-    const { id } = c.req.valid("param");
-    const category = await getCategoryByIdService(Number(id));
+    const id = Number(c.req.valid("param"));
+    const category = await getCategoryByIdService(id);
     return category
-      ? c.json({ success: true, message: "Category found", data: category })
-      : c.json({ success: false, message: "Category not found" }, 404);
+      ? c.json({
+          success: true,
+          message: `Category with ID ${id} found`,
+          data: category,
+        })
+      : c.json(
+          { success: false, message: `Category with ID ${id} not found` },
+          404
+        );
   }
 );
 

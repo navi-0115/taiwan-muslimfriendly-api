@@ -4,7 +4,10 @@ import { z } from "zod";
 //Creating a category
 export const createCategorySchema = z.object({
   name: z.string().min(1, "Name is required"),
-  description: z.string().min(1, "Description is required"),
+});
+
+const getCategoryByIdSchema = z.object({
+  id: z.number(),
 });
 
 //Updating a category (optional fields)
@@ -15,5 +18,5 @@ export const updateCategorySchema = z.object({
 
 // for id
 export const categoryIdSchema = z.object({
-  id: z.string().regex(/^\d+$/, "ID must be a number"),
+  id: z.number(),
 });

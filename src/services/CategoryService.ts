@@ -11,10 +11,7 @@ export async function getCategoryByIdService(id: number) {
 }
 
 // Create a new category
-export async function createCategoryService(data: {
-  name: string;
-  description: string;
-}) {
+export async function createCategoryService(data: { name: string }) {
   return await prisma.category.create({
     data,
   });
