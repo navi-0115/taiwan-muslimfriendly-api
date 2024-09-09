@@ -15,7 +15,7 @@ const locationSchema = z.object({
 // GET all locations
 export const getAllLocations = async (c: Context) => {
   try {
-    const locations = await prisma.location.findMany({
+    const locations = await prisma.site.findMany({
       orderBy: { id: "desc" },
     });
 
@@ -38,7 +38,7 @@ export const getLocationById = async (c: Context) => {
     const id = Number(c.req.param("id"));
     if (!id) return c.json({ success: false, messages: `could not found ID` });
 
-    const location = await prisma.location.findUnique({ where: { id } });
+    const location = await prisma.site.findUnique({ where: { id } });
 
     return c.json(
       {
@@ -59,7 +59,7 @@ export const deleteLocationById = async (c: Context) => {
     const id = Number(c.req.param("id"));
     if (!id) return c.json({ success: false, messages: "could not found ID" });
 
-    const deletedLocation = await prisma.location.delete({ where: { id } });
+    const deletedLocation = await prisma.site.delete({ where: { id } });
 
     return c.json(
       {

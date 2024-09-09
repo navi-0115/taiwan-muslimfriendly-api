@@ -5,11 +5,12 @@
     "seed": "bun run prisma/seed.ts"
   },
   "scripts": {
-    "dev": "bun run --hot src/index.ts",
+    "dev": "bun run --hot src/index.tsx",
     "start": "bun prisma generate && bun prisma migrate deploy && bun run src/index.ts && bun run prisma db seed"
   },
   "dependencies": {
     "@hono/swagger-ui": "^0.4.1",
+    "@hono/zod-openapi": "^0.16.0",
     "@hono/zod-validator": "^0.2.2",
     "@prisma/client": "^5.19.0",
     "git-filter-repo": "^0.0.30",

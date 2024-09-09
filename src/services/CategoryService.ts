@@ -88,7 +88,7 @@ export const deleteCategoryById = async (c: Context) => {
     const id = Number(c.req.param("id"));
     if (!id) return c.json({ success: false, messages: "could not found ID" });
 
-    const deletedLocation = await prisma.location.delete({ where: { id } });
+    const deletedLocation = await prisma.site.delete({ where: { id } });
 
     return c.json(
       {
