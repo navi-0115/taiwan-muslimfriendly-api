@@ -13,7 +13,6 @@ const getCategoryByIdSchema = z.object({
 //Updating a category (optional fields)
 export const updateCategorySchema = z.object({
   name: z.string().optional(),
-  description: z.string().optional(),
 });
 
 // for id

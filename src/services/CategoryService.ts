@@ -19,7 +19,7 @@ export async function createCategoryService(data: { name: string }) {
 // Update a category by ID
 export async function updateCategoryService(
   id: number,
-  data: { name?: string; description?: string }
+  data: { name?: string }
 ) {
   return await prisma.category.update({ where: { id }, data });
 }
