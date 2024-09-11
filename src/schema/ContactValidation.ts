@@ -4,8 +4,8 @@ import { z } from "zod";
 //Creating a contacts
 export const createContactSchema = z.object({
   name: z.string().min(6, "Name is required"),
-  address: z.string().min(12),
-  phone: z.string().min(10),
+  address: z.string().min(12, "address required"),
+  phone: z.string().min(10, "phone required"),
 });
 
 //Updating a sites (optional fields)
