@@ -1,57 +1,58 @@
-// sites/service.ts
 import prisma from "../../prisma/client";
 
-// Fetch all sites from the database
-export async function getAllSitesService() {
-  return await prisma.site.findMany({ orderBy: { id: "desc" } });
-}
-// Fetch sites by id
-export async function getSiteByIdService(id: number) {
-  return await prisma.site.findUnique({ where: { id } });
+// Fetch all contacts from the database
+export async function getAllContactsService() {
+  return await prisma.contact.findMany({ orderBy: { id: "desc" } });
 }
 
-// Create a new site
-export async function createSiteService(data: {
+// Fetch contact by id
+export async function getContactByIdService(id: number) {
+  return await prisma.contact.findUnique({ where: { id } });
+}
+
+// Create a new contact
+export async function createContactService(data: {
   name: string;
-  description: string;
-  categoryId: number;
-  contactId: number;
+  address: string;
+  phone: string;
 }) {
-  const existingSite = await prisma.site.findUnique({
+  // Check if a contact with the same phone number already exists
+  const existingContact = await prisma.contact.findFirst({
     where: {
-      contactId: data.contactId,
+      phone: data.phone,
     },
   });
 
-  if (existingSite) {
-    throw new Error("A site with this contact already exists.");
+  if (existingContact) {
+    throw new Error("A contact with this phone number already exists.");
   }
 
-  return await prisma.site.create({
+  return await prisma.contact.create({
     data,
   });
 }
-// Update a site by ID
-export async function updateSiteService(
+
+// Update a contact by ID
+export async function updateContactService(
   id: number,
-  data: { name?: string | undefined }
+  data: { name?: string; address?: string; phone?: string }
 ) {
-  return await prisma.site.update({ where: { id }, data });
+  return await prisma.contact.update({ where: { id }, data });
 }
 
-// Delete a site by ID
-export async function deleteSiteByIdService(id: number) {
-  // Check if the site exists
-  const existingSite = await prisma.site.findUnique({
+// Delete a contact by ID
+export async function deleteContactByIdService(id: number) {
+  // Check if the contact exists
+  const existingContact = await prisma.contact.findUnique({
     where: { id },
   });
 
-  if (!existingSite) {
+  if (!existingContact) {
     return null;
   }
 
-  // Delete the site
-  return await prisma.site.delete({
+  // Delete the contact
+  return await prisma.contact.delete({
     where: { id },
   });
 }
