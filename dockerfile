@@ -23,7 +23,7 @@ WORKDIR /app
 COPY --from=builder /app /app
 
 # Copy .env file
-COPY .env .env
+# COPY .env .env
 
 # Run Prisma generate
 RUN bun run prisma generate
