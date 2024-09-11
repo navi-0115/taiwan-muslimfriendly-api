@@ -5,7 +5,7 @@ API for listing categories, sites, and contacts for Muslim Friendly Taiwan touri
 ## REST API Specification
 
 - Production: [https://taiwan-muslimfriendly-api.onrender.com/](https://taiwan-muslimfriendly-api.onrender.com/)
-- Local: [http://localhost](http://localhost:3000/)
+- Local: [http://localhost:3000](http://localhost:3000/)
 
 | Endpoint           | HTTP     | Description            | Implemented |
 | ------------------ | -------- | ---------------------- | ----------- |
