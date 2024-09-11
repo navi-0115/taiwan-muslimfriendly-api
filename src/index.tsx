@@ -3,7 +3,7 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { categoriesRoute } from "./routes/CategoriesRoutes";
 import { sitesRoute } from "./routes/SitesRoutes";
 import { contactsRoute } from "./routes/ContactRoutes";
-// import { HomePage } from "./homepage";
+import { HomePage } from "./homepage";
 
 export default new OpenAPIHono({ strict: false })
   .route("/api/categories", categoriesRoute)
@@ -41,7 +41,7 @@ export default new OpenAPIHono({ strict: false })
           <script src="https://cdn.tailwindcss.com"></script>
         </head>
         <body>
-          <h1>Hai</h1>
+          <HomePage />
         </body>
       </html>
     )
