@@ -12,7 +12,7 @@ API for listing categories, sites, and contacts for Muslim Friendly Taiwan touri
 | `/categories`      | `GET`    | Get all categories     | ✅          |
 | `/categories/{id}` | `GET`    | Get one category by id | ✅          |
 | `/categories`      | `POST`   | Add new category       | ✅          |
-| `/categories/{id}` | `DELETE` | Delete site by id      | ✅          |
+| `/categories/{id}` | `DELETE` | Delete category by id      | ✅          |
 | `/sites`           | `GET`    | Get all sites          | ✅          |
 | `/sites/{id}`      | `GET`    | Get one site by id     | ✅          |
 | `/sites`           | `POST`   | Add new site           | ✅          |
