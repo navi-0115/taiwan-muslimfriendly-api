@@ -6,16 +6,12 @@ export const createCategorySchema = z.object({
   name: z.string().min(1, "Name is required"),
 });
 
-const getCategoryByIdSchema = z.object({
-  id: z.number(),
-});
-
 //Updating a category (optional fields)
 export const updateCategorySchema = z.object({
   name: z.string().optional(),
 });
 
-// for id
+// for category id schema
 export const categoryIdSchema = z.object({
-  id: z.number(),
+  id: z.coerce.number().int().min(1),
 });

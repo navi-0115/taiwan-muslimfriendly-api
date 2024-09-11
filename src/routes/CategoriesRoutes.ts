@@ -1,5 +1,4 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { zValidator } from "@hono/zod-validator";
 import {
   createCategorySchema,
   updateCategorySchema,
@@ -43,10 +42,10 @@ categoriesRoute.openapi(
 categoriesRoute.openapi(
   {
     method: "get",
-    path: "/:id",
+    path: "/{id}",
     description: "Get category by ID",
     request: {
-      params: categoryIdSchema, // Validate the `id` parameter
+      params: categoryIdSchema,
     },
     responses: {
       200: {
@@ -59,8 +58,9 @@ categoriesRoute.openapi(
     tags: API_TAG,
   },
   async (c) => {
-    const id = Number(c.req.valid("param"));
+    const id = Number(c.req.param("id"));
     const category = await getCategoryByIdService(id);
+
     return category
       ? c.json({
           success: true,
@@ -113,11 +113,11 @@ categoriesRoute.openapi(
 // Update category by ID (PATCH)
 categoriesRoute.openapi(
   {
-    method: "patch",
-    path: "/:id",
+    method: "put",
+    path: "/{id}",
     description: "Update a category by ID",
     request: {
-      params: categoryIdSchema, // Validate the `id` parameter
+      params: categoryIdSchema,
       body: {
         content: {
           "application/json": {
@@ -137,16 +137,19 @@ categoriesRoute.openapi(
     tags: API_TAG,
   },
   async (c) => {
-    const { id } = c.req.valid("param");
     const data = c.req.valid("json");
-    const updatedCategory = await updateCategoryService(Number(id), data);
+    const id = Number(c.req.param("id"));
+    const updatedCategory = await updateCategoryService(id, data);
     return updatedCategory
       ? c.json({
           success: true,
-          message: "Category updated",
+          message: `Category with ID ${id} updated`,
           data: updatedCategory,
         })
-      : c.json({ success: false, message: "Category not found" }, 404);
+      : c.json(
+          { success: false, message: `Category with ID ${id} not found` },
+          404
+        );
   }
 );
 
@@ -154,7 +157,7 @@ categoriesRoute.openapi(
 categoriesRoute.openapi(
   {
     method: "delete",
-    path: "/:id",
+    path: "/{id}",
     description: "Delete category by ID",
     request: {
       params: categoryIdSchema, // Validate the `id` parameter
@@ -170,10 +173,16 @@ categoriesRoute.openapi(
     tags: API_TAG,
   },
   async (c) => {
-    const { id } = c.req.valid("param");
-    const deletedCategory = await deleteCategoryByIdService(Number(id));
+    const id = Number(c.req.param("id"));
+    const deletedCategory = await deleteCategoryByIdService(id);
     return deletedCategory
-      ? c.json({ success: true, message: "Category deleted" })
-      : c.json({ success: false, message: "Category not found" }, 404);
+      ? c.json({
+          success: true,
+          message: `Category with ID ${id} has been deleted`,
+        })
+      : c.json(
+          { success: false, message: `Category with ID ${id} not found` },
+          404
+        );
   }
 );

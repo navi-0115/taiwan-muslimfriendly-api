@@ -19,7 +19,7 @@ model Site {
   description String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  category Category @relation(fields: [categoryId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id]) 
   categoryId Int
   contact Contact @relation(fields: [contactId], references: [id])
   contactId Int @unique
@@ -31,7 +31,7 @@ model Site {
 model Category {
   id       Int   @id @default(autoincrement())
   name     String 
-  sites Site[]
+  sites Site[]   
   @@map("categories")
 }
 
