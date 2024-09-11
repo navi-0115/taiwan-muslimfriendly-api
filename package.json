@@ -6,7 +6,7 @@
   },
   "scripts": {
     "dev": "bun run --hot src/index.tsx",
-    "start": "bun prisma generate && bun prisma migrate deploy && bun run src/index.ts && bun run prisma db seed"
+    "start": "bun prisma generate && bun prisma migrate deploy && bun run src/index.tsx && bun run prisma db seed"
   },
   "dependencies": {
     "@hono/swagger-ui": "^0.4.1",
