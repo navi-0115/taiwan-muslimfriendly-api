@@ -29,7 +29,7 @@ COPY .env .env
 RUN bun run prisma generate
 
 # Expose port for the application
-EXPOSE 3001
+EXPOSE 3002
 
 # Start the application
 CMD ["bun", "start"]
