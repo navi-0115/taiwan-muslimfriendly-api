@@ -12,13 +12,13 @@
 import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { categoriesRoute } from "./routes/CategoriesRoutes";
-// import { sitesRoutes } from "./routes/SitesRoutes";
+import { sitesRoute } from "./routes/SitesRoutes";
 // import { contactsRoute } from "./routes/ContactRoutes";
 // import { HomePage } from "./homepage";
 
 export default new OpenAPIHono({ strict: false })
   .route("/api/categories", categoriesRoute)
-  // .route("/api/sites", sitesRoute)
+  .route("/api/sites", sitesRoute)
   // .route("/api/contacts", contactsRoute)
 
   // OpenAPI documentation
